@@ -15,20 +15,23 @@
   $times = array();
   $colCount = 0;
   $skipCount = 0;
-  foreach($html->find('.ave .time, .ave [class^="w"], .ave .closure, .ave .na') as $node){
-    $value = $node->plaintext;
-    if ($value == 'PP 終了') {
-      $skipCount = $colCount - 1;
-    } else if ($skipCount > 0) {
-      $skipCount = $skipCount - 1;
-    } else if ($value == '平均') {
-      $colCount = 0;
-      array_push($times, $value);
-    } else {
-      $colCount = $colCount + 1;
-      array_push($times, $value);
-    }
-  }
+  // foreach($html->find('.ave .time, .ave [class^="w"], .ave .closure, .ave .na') as $node){
+  foreach($html->find('.ave') as $aveNode){
+    foreach($aveNode->children as $node){
+      $value = $node->plaintext;
+      if ($value == 'PP 終了') {
+        $skipCount = $colCount - 1;
+      } else if ($skipCount > 0) {
+        $skipCount = $skipCount - 1;
+      } else if ($value == '平均') {
+        $colCount = 0;
+        array_push($times, $value);
+      } else {
+        $colCount = $colCount + 1;
+        array_push($times, $value);
+      }
+    }  
+  }  
 
   // JSON配列にアトラクション名(name), 平均時間(time)を設定
   $arrays = array();
