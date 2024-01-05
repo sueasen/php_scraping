@@ -17,19 +17,17 @@
         .then(json => {
             console.log(json);
             [...json].forEach(data => {
-                const doms = createDom(data.name, data.time);
-                document.querySelector('#result').append(doms[0], doms[1]);
+                document.querySelector('#result').append(
+                    createDiv(data.name, '70%')
+                    , createDiv(data.time, '30%'));
             })
         });
     
-    function createDom(name, time) {
-        const nameDom = document.createElement('div');
-        nameDom.textContent = name;
-        nameDom.style.width = '70%'
-        const timeDom = document.createElement('div');
-        timeDom.textContent = time;
-        timeDom.style.width = '30%'
-        return [nameDom, timeDom];
+    function createDiv(text, width) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        div.style.width = width;
+        return div;
     }
 
 </script>
